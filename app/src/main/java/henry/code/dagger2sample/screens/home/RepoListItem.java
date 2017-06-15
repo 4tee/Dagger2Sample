@@ -44,13 +44,11 @@ public class RepoListItem extends FrameLayout {
     TextView updatedAt;
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.fullDate();
+    private Picasso picasso;
 
-    public RepoListItem(Context context) {
+    public RepoListItem(Context context, Picasso picasso) {
         super(context);
-        init();
-    }
-
-    private void init() {
+        this.picasso = picasso;
         inflate(getContext(), R.layout.list_item_repo, this);
         ButterKnife.bind(this);
     }
@@ -68,11 +66,7 @@ public class RepoListItem extends FrameLayout {
 
         updatedAt.setText(DATE_TIME_FORMATTER.print(githubRepo.updatedAt));
 
-//        updatedAt.setText(getResources()
-//                .getString(R.string.last_pushed, DATE_TIME_FORMATTER.print(githubRepo.updatedAt)));
-
-        Picasso.with(getContext())
-                .load(githubRepo.owner.avatarUrl)
+        picasso.load(githubRepo.owner.avatarUrl)
                 .placeholder(R.drawable.ic_person_black_24dp)
                 .into(avatarImage);
     }

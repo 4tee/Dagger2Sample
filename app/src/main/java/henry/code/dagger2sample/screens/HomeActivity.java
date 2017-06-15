@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -24,6 +26,8 @@ public class HomeActivity extends AppCompatActivity {
     ListView listView;
 
     GithubService githubService;
+    Picasso picasso;
+
     Call<List<GithubRepo>> reposCall;
 
     AdapterRepos adapterRepos;
@@ -34,10 +38,11 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-        adapterRepos = new AdapterRepos(this);
-        listView.setAdapter(adapterRepos);
-
         githubService = GithubApplication.get(this).getGithubService();
+        picasso = GithubApplication.get(this).getPicasso();
+
+        adapterRepos = new AdapterRepos(this, picasso);
+        listView.setAdapter(adapterRepos);
 
         reposCall = githubService.getAllRepos();
         reposCall.enqueue(new Callback<List<GithubRepo>>() {
