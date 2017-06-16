@@ -3,9 +3,6 @@ package henry.code.dagger2sample;
 import android.app.Activity;
 import android.app.Application;
 
-import com.squareup.picasso.Picasso;
-
-import henry.code.dagger2sample.network.GithubService;
 import timber.log.Timber;
 
 /**
@@ -18,8 +15,7 @@ public class GithubApplication extends Application {
         return (GithubApplication) activity.getApplication();
     }
 
-    private GithubService githubService;
-    private Picasso picasso;
+    GithubApplicationComponent component;
 
     @Override
     public void onCreate() {
@@ -27,21 +23,14 @@ public class GithubApplication extends Application {
 
         Timber.plant(new Timber.DebugTree());
 
-        GithubApplicationComponent component = DaggerGithubApplicationComponent.builder()
+        component = DaggerGithubApplicationComponent.builder()
                 .contextModule(new ContextModule(this))
                 .build();
 
-        githubService = component.githubService();
-        picasso = component.picasso();
-
     }
 
-    public GithubService getGithubService() {
-        return githubService;
-    }
-
-    public Picasso getPicasso() {
-        return picasso;
+    public GithubApplicationComponent getComponent() {
+        return component;
     }
 
 

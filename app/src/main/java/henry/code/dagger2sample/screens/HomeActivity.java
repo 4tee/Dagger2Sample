@@ -16,6 +16,9 @@ import henry.code.dagger2sample.R;
 import henry.code.dagger2sample.models.GithubRepo;
 import henry.code.dagger2sample.network.GithubService;
 import henry.code.dagger2sample.screens.home.AdapterRepos;
+import henry.code.dagger2sample.screens.home.DaggerHomeActivityComponent;
+import henry.code.dagger2sample.screens.home.HomeActivityComponent;
+import henry.code.dagger2sample.screens.home.HomeActivityModule;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,10 +41,17 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
-        githubService = GithubApplication.get(this).getGithubService();
-        picasso = GithubApplication.get(this).getPicasso();
 
-        adapterRepos = new AdapterRepos(this, picasso);
+
+        HomeActivityComponent component = DaggerHomeActivityComponent.builder()
+                .homeActivityModule(new HomeActivityModule(this))
+                .githubApplicationComponent(GithubApplication.get(this).getComponent())
+                .build();
+
+        githubService = component.githubService();
+        picasso = component.picasso();
+
+        adapterRepos = component.adapterRepos();
         listView.setAdapter(adapterRepos);
 
         reposCall = githubService.getAllRepos();
