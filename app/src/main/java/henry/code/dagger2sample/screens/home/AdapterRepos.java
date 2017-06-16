@@ -11,7 +11,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import henry.code.dagger2sample.models.GithubRepo;
+import henry.code.dagger2sample.screens.HomeActivity;
 
 public class AdapterRepos extends BaseAdapter {
 
@@ -19,7 +22,8 @@ public class AdapterRepos extends BaseAdapter {
   private final Context context;
   private Picasso picasso;
 
-  public AdapterRepos(Context context, Picasso picasso) {
+  @Inject
+  public AdapterRepos(HomeActivity context, Picasso picasso) {
     this.context = context;
     this.picasso = picasso;
   }
