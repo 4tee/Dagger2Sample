@@ -21,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GithubServiceModule {
 
     @Provides
+    @GithubApplicationScope
     public Gson gson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(DateTime.class, new DateTimeConverter());
@@ -28,6 +29,7 @@ public class GithubServiceModule {
     }
 
     @Provides
+    @GithubApplicationScope
     public Retrofit retrofit(OkHttpClient okHttpClient, Gson gson) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
@@ -37,6 +39,7 @@ public class GithubServiceModule {
     }
 
     @Provides
+    @GithubApplicationScope
     public GithubService githubService(Retrofit gitHubRetrofit) {
         return gitHubRetrofit.create(GithubService.class);
     }

@@ -33,6 +33,7 @@ public class GithubApplication extends Application {
 
         githubService = component.githubService();
         picasso = component.picasso();
+
     }
 
     public GithubService getGithubService() {

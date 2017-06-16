@@ -19,6 +19,7 @@ public class ContextModule {
     }
 
     @Provides
+    @GithubApplicationScope
     public Context context() {
         return context;
     }
