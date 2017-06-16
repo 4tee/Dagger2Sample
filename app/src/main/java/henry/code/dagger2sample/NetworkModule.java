@@ -15,7 +15,7 @@ import timber.log.Timber;
  * Created by henry.thetswe on 15/6/17.
  */
 
-@Module
+@Module(includes = ContextModule.class)
 public class NetworkModule {
 
     @Provides
